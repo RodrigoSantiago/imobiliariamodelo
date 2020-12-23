@@ -1,0 +1,176 @@
+extends layout
+
+block page
+    link(rel='stylesheet' href='stylesheets/detalhe.css')
+    link(rel='stylesheet' href='https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==' crossorigin='')
+    script(src='https://unpkg.com/leaflet@1.3.4/dist/leaflet.js' integrity='sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==' crossorigin='')
+
+    script.
+        var current = null;
+        var map;
+        $(function () {
+            current = $('#galery');
+            map = L.map('mapid', {dragging: false, tap: false}).setView(["#{row['lat']}", "#{row['lon']}"], 15);
+            map.attributionControl.setPosition('topright');
+            map.scrollWheelZoom.disable();
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            var marker1 = L.marker(["#{row['lat']}", "#{row['lon']}"], {draggable: true}).addTo(map)
+                .bindPopup('');
+            marker1.on('mouseover', function (e) {
+                marker1.setPopupContent(marker1.getLatLng().toString());
+            });
+            var circle = L.circle(["#{row['lat']}", "#{row['lon']}"], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: 500
+            }).addTo(map);
+        });
+        function toScreen(name) {
+            if (current.attr('id') !== name) {
+                if (current.attr('id') === 'video') {
+                    $('.youtube-video')[0].contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+                }
+                current.fadeOut();
+                current = $('#' + name);
+                map.invalidateSize();
+                current.fadeIn(function () {
+                    setTimeout(map.invalidateSize(), 1);
+                });
+            }
+        }
+        var galeryImg = 0;
+        var galeryCount = "#{imagens.length}";
+        function galeryMove(dir) {
+            if (dir === 1 && galeryImg < galeryCount - 1) {
+                $('#img_' + galeryImg).fadeOut();
+                $('#img_' + ++galeryImg).fadeIn();
+            } else if (dir === -1 && galeryImg > 0) {
+                $('#img_' + galeryImg).fadeOut();
+                $('#img_' + --galeryImg).fadeIn();
+            }
+            if (galeryImg === 0) {
+                $('#galery .navigator.left').fadeOut();
+            } else {
+                $('#galery .navigator.left').fadeIn();
+            }
+            if (galeryImg === galeryCount - 1) {
+                $('#galery .navigator.right').fadeOut();
+            } else {
+                $('#galery .navigator.right').fadeIn();
+            }
+        }
+        var planFloor = 0;
+        var planCount = "#{plantas.length}";
+        function planMove(dir) {
+            if (dir === 1 && planFloor < planCount - 1) {
+                $('#plan_' + planFloor).fadeOut();
+                $('#plan_' + ++planFloor).fadeIn();
+            } else if (dir === -1 && planFloor > 0) {
+                $('#plan_' + planFloor).fadeOut();
+                $('#plan_' + --planFloor).fadeIn();
+            }
+            if (planFloor === 0) {
+                $('#plan .navigator.left').fadeOut();
+            } else {
+                $('#plan .navigator.left').fadeIn();
+            }
+            if (planFloor === planCount - 1) {
+                $('#plan .navigator.right').fadeOut();
+            } else {
+                $('#plan .navigator.right').fadeIn();
+            }
+        }
+    #body_page.content_page
+        #body_title.flex.vertical.center
+            span.title.txt-emphasis--high #{row['titulo']}
+            span.subtitle.txt-emphasis--medium #{row['descricao']}
+        #itens_view.flex.horizontal
+            #itens_datail.flex.grow.vertical
+                #main_card.bgcolor--surface.shadow--thin
+                    .media.relative
+                        .navigation.flex.horizontal.center
+                            #btn_galery.navigator.btn--primary.shadow--big(onclick="toScreen('galery')")
+                                i.material-icons collections
+                            #btn_video.navigator.btn--primary.shadow--big(onclick="toScreen('video')")
+                                i.material-icons videocam
+                            #btn_plan.navigator.btn--primary.shadow--big(onclick="toScreen('plan')")
+                                i.material-icons map
+                            #btn_map.navigator.btn--primary.shadow--big(onclick="toScreen('map')")
+                                i.material-icons location_on
+                        #galery
+                            - i = 0;
+                            each img in imagens
+                                div(id="img_" + i, class='img image', style="background-image : url('images/"+img+"')")
+                                - i ++;
+                            .navigator.left.txt-emphasis--high.btn--white(onclick='galeryMove(-1)' style='display:none')
+                                i.material-icons keyboard_arrow_left
+                            .navigator.right.txt-emphasis--high.btn--white(onclick='galeryMove(1)')
+                                i.material-icons keyboard_arrow_right
+                        #video
+                            div
+                                iframe.youtube-video(width='100%' height='100%' src='https://www.youtube.com/embed/'+row['video']+'?rel=0&enablejsapi=1&version=3&playerapiid=ytplayer' frameborder='0' allowfullscreen='')
+                        #plan
+                            - i = 0;
+                            each img in plantas
+                                div(id="plan_" + i, class='img floor', style="background-image : url('images/" + img + "')")
+                                - i++;
+                            .navigator.left.txt-emphasis--high.btn--white(onclick='planMove(-1)' style='display:none')
+                                i.material-icons keyboard_arrow_left
+                            .navigator.right.txt-emphasis--high.btn--white(onclick='planMove(1)')
+                                i.material-icons keyboard_arrow_right
+                        #map
+                            #mapid
+                    .price.flex.horizontal.center
+                    .main_data.flex.i-txtcolor--surface
+                        .left.flex.grow
+                            span.name.txt-emphasis--high R$ #{row['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                            span.value.txt-emphasis--medium #{row['endereco']}
+                        .tag.bgcolor--accent--dark.i-txtcolor--accent--dark Tag
+                    .divider
+                    .data.flex.i-txtcolor--surface
+                        .left.flex.grow
+                            span.name.txt-emphasis--high Tipo
+                            span.value.txt-emphasis--medium #{row['tipo']}
+                        .right.flex.grow
+                            span.name.txt-emphasis--high Área
+                            span.value.txt-emphasis--medium 50m²
+                    .divider
+                    .data.flex.i-txtcolor--surface
+                        .left.flex.grow
+                            span.name.txt-emphasis--high Quartos
+                            span.value.txt-emphasis--medium #{row['quartos']}
+                        .right.flex.grow
+                            span.name.txt-emphasis--high Pisos
+                            span.value.txt-emphasis--medium #{row['pisos']}
+                    .divider
+                    .data.flex.i-txtcolor--surface
+                        .left.flex.grow
+                            span.name.txt-emphasis--high Garagem
+                            span.value.txt-emphasis--medium #{row['garagem']}
+                        .right.flex.grow
+                            span.name.txt-emphasis--high Banheiros
+                            span.value.txt-emphasis--medium #{row['banheiros']}
+                #overview_card.flex.vertical.bgcolor--surface.shadow--thin
+                    .title.txt-emphasis--high Visão geral da Propriedade
+                    .content.txt-emphasis--medium #{row['detalhes']}
+                #env_card.flex.vertical.bgcolor--surface.shadow--thin
+                    .title.txt-emphasis--high Facilidades
+                    .subtitle.txt-emphasis--medium Lugares próximos, informações do condomínio e da propriedade em si
+                    .tags
+                        .tag.tag--01 Piscinas
+                        .tag.tag--02 Churrasqueira
+                        .tag.tag--03 Campo de Futebol
+                        .tag.tag--01 Posto de gasolina
+                        .tag.tag--02 Churrasqueira
+                        .tag.tag--03 Campo de Futebol
+                        .tag.tag--01 Posto de gasolina
+            #itens_bar
+                include widgets/contacts
+                include widgets/news
+                include widgets/newsletters
+            #btn_parent.relative
+                #btn_call.center.bgcolor--accent.shadow--small
+                    i.material-icons.i-txtcolor--accent call

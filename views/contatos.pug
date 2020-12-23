@@ -1,0 +1,55 @@
+extends layout
+block page
+    link(rel='stylesheet', href='stylesheets/contatos.css')
+
+    #body_page.content_page
+        #body_title.flex.vertical.center
+            span.title.txt-emphasis--high Entre em contato ou fale conosco pessoalmente
+            span.subtitle.txt-emphasis--medium Prezamos pelo atendimento rápido e eficiente
+        .contacts.shadow--thin
+            .left_contacts.flex.vertical.bgcolor--surface
+                .line.flex.horizontal
+                    i.material-icons.txt-emphasis--high home
+                    .title.txt-emphasis--high Endereço do escritório
+                .divider
+                .flex.horizontal
+                    i.material-icons.txt-emphasis--high call
+                    .title.txt-emphasis--high 86 9 9955-5555
+                .flex.horizontal
+                    i.material-icons.txt-emphasis--high call
+                    .title.txt-emphasis--high 86 9 9955-5555
+                .flex.horizontal
+                    i.material-icons.txt-emphasis--high call
+                    .title.txt-emphasis--high 86 9 9955-5555
+                .flex.horizontal
+                    i.material-icons.txt-emphasis--high call
+                    .title.txt-emphasis--high 86 9 9955-5555
+                .flex.horizontal
+                    i.material-icons.txt-emphasis--high email
+                    .title.txt-emphasis--high contato@email.com
+                .flex.horizontal
+                    i.material-icons.txt-emphasis--high email
+                    .title.txt-emphasis--high contato@email.com
+                .divider
+                .social.flex.horizontal
+                    .youtube.flex.center
+                        img(src='images/ico_youtube.png')
+                    .facebook.flex.center
+                        img(src='images/ico_face.png')
+                    .instagram.flex.center
+                        img(src='images/ico_insta.png')
+            .right_contacts.flex.vertical.bgcolor--accent--light
+                .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#contact_name.mdl-textfield__input(type='text')
+                    label.mdl-textfield__label(for='contact_name') Nome
+                .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#contact_email.mdl-textfield__input(type='text')
+                    label.mdl-textfield__label(for='contact_email') Email
+                .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#contact_number.mdl-textfield__input(type='text')
+                    label.mdl-textfield__label(for='contact_number') Telefone
+                .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    textarea#contact_message.mdl-textfield__input(rows=4)
+                    label.mdl-textfield__label(for='contact_message') Message
+                .subtitle.txt-emphasis--medium Ao nos enviar suas informações, você concorda com os Termos de Uso e Política de Privacidade
+                button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect Enviar

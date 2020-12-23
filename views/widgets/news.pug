@@ -1,0 +1,14 @@
+link(rel='stylesheet', href='stylesheets/widgets/news.css')
+#itens_news.bgcolor--surface.shadow--thin
+    .title.txt-emphasis--high Novas Propriedades
+    .subtitle.txt-emphasis--medium Veja as oportunidades mais recentes
+    - var i = 0;
+    each row in news
+        .entry.flex.horizontal.hovercolor--surface(onclick="window.location.href='detalhe?id=" + row['id']+"'")
+            .image(style="background-image : url('images/"+row['imagem']+"')")
+            .flex.vertical
+                .title #{row['titulo']}
+                .subtitle #{row['descricao']}
+    .view_more.flex.horizontal.center.txt-emphasis--medium.hovercolor--surface(onclick="window.location.href='imoveis'")
+        | Ver todas
+        i.material-icons trending_flat

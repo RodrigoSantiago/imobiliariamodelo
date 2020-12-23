@@ -1,0 +1,400 @@
+extends layout
+
+block page
+    link(rel='stylesheet' href='stylesheets/home.css')
+    script.
+        $(function () {
+            // Resize
+            checkSize();
+            $(window).resize(function () {
+                checkSize();
+            });
+            // Sliders
+            $("#slider-range-price").slider({
+                range: true,
+                min: 0,
+                max: 1000000,
+                values: [0, 1000000],
+                slide: function (event, ui) {
+                    $("#min-price").text("$" + ui.values[0].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, "."));
+                    if (ui.values[1] === 1000000) {
+                        $("#max-price").text("$1.000.000+");
+                    } else {
+                        $("#max-price").text("$" + ui.values[1].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, "."));
+                    }
+                }
+            });
+            $("#slider-range-area").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [0, 500],
+                slide: function (event, ui) {
+                    $("#min-area").text(ui.values[0].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, ".") + " m²");
+                    if (ui.values[1] === 500) {
+                        $("#max-area").text("500+ m²");
+                    } else {
+                        $("#max-area").text(ui.values[1].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, ".") + " m²");
+                    }
+                }
+            });
+        });
+        // Resize
+        var pSize = -1;
+        function checkSize() {
+            if (window.matchMedia('(max-width:512px)').matches) {
+                if (pSize !== 3) {
+                    pSize = 3;
+                    onResize(pSize);
+                }
+            } else if (window.matchMedia('(max-width:768px) and (min-width:513px)').matches) {
+                if (pSize !== 2) {
+                    pSize = 2;
+                    onResize(pSize);
+                }
+            } else if (window.matchMedia('(max-width: 992px) and (min-width:769px)').matches) {
+                if (pSize !== 1) {
+                    pSize = 1;
+                    onResize(pSize);
+                }
+            } else if (pSize !== 0) {
+                pSize = 0;
+                onResize(pSize);
+            }
+        }
+        function onResize(size) {
+            if (size < 3) {
+                $("#search_input_field").attr("placeholder", "Pesquisar por tipo, cidade, lugar, pontos de referência e etc");
+            } else {
+                $("#search_input_field").attr("placeholder", "Pesquisar...");
+            }
+            carouselSet(carouselPos);
+        }
+        // Carousel
+        var carouselPos = 0;
+        var carouselSize = 6;
+        function carousel(val) {
+            if (val < 0 && carouselPos > 0) {
+                $('.h_scroll .carousel_card:nth-child(' + carouselPos-- + ')').animate({
+                    width: 'toggle',
+                    margin: 'toggle'
+                });
+            } else if (val > 0 && carouselPos < carouselSize - (4 - pSize)) {
+                $('.h_scroll .carousel_card:nth-child(' + ++carouselPos + ')').animate({
+                    width: 'toggle',
+                    margin: 'toggle'
+                });
+            }
+            carouselUpdateButtons();
+            return false;
+        }
+        function carouselSet(val) {
+            carouselPos = val;
+            if (carouselPos > carouselSize - (4 - pSize)) carouselPos = carouselSize - (4 - pSize);
+            for (var i = 0; i < carouselSize; i++) {
+                if (i >= carouselPos) {
+                    $('.h_scroll .carousel_card:nth-child(' + (i + 1) + ')').show(function () {
+                        $(this).css('display', 'flex');
+                    });
+                } else {
+                    $('.h_scroll .carousel_card:nth-child(' + (i + 1) + ')').hide();
+                }
+            }
+            carouselUpdateButtons();
+            return false;
+        }
+        function carouselUpdateButtons() {
+            if (carouselPos === 0) {
+                $('#nav_left').fadeOut();
+            } else {
+                $('#nav_left').fadeIn(function () {
+                    $('#nav_left').css('display', 'flex');
+                });
+            }
+            if (carouselPos >= carouselSize - (4 - pSize)) {
+                $('#nav_right').fadeOut();
+            } else {
+                $('#nav_right').fadeIn(function () {
+                    $(this).css('display', 'flex');
+                });
+            }
+        }
+        // Search Settings
+        $("body").click(function (e) {
+            var target = $(e.target);
+            if (target.parents('#search_settings').length === 0 &&
+                target.parents('#search_field').length === 0) {
+                $("#search_settings").fadeOut();
+            }
+            if (target.parents('#search_field').length === 1) {
+                $("#search_settings").fadeIn(function () {
+                    $(this).css('display', 'flex');
+                });
+            }
+        });
+        function bedToogle(pos) {
+            $('#bed_' + pos).toggleClass('btn--primary').toggleClass('btn--gray');
+        }
+        function badToogle(pos) {
+            $('#bad_' + pos).toggleClass('btn--primary').toggleClass('btn--gray');
+        }
+        function typeToogle(pos) {
+            $('#type_' + pos).toggleClass('btn--primary').toggleClass('btn--gray');
+        }
+    .content_fit.bgcolor--primary.shadow--small
+        .content_page
+            #search_header.flex.center
+                .flex.horizontal
+                    #search_btn.txt-menu.btn--accent
+                        .relative.hide
+                            #search_dropdown.bgcolor--accent
+                                .flex.i-txtcolor--accent.hovercolor--accent Comprar
+                                .flex.i-txtcolor--accent.hovercolor--accent Alugar
+                        span.flex.center.buytitle COMPRAR
+                        span.flex.center.buyicon
+                            i.material-icons shopping_cart
+                    #search_field
+                        .relative
+                            #search_settings.flex.vertical.bgcolor--surface.shadow--small
+                                .divider
+                                .flex.session
+                                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                                        input#p_area.mdl-textfield__input(type='text')
+                                        label.mdl-textfield__label(for='p_area') Localização
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Tipo
+                                        .flex.horizontal.btns
+                                            button#type_0.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(0)') Casa
+                                            button#type_1.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(1)') Apto
+                                            button#type_2.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(2)') Lote
+                                            button#type_3.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(3)') Sítio
+                                            button#type_4.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(4)') Kitnet
+                                .flex.session
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Preço
+                                        .flex.horizontal
+                                            span#min-price.label.txtcolor--surface.grow $0
+                                            span#max-price.label.txtcolor--surface $1.000.000+
+                                        #slider-range-price.slider-range
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Área
+                                        .flex.horizontal
+                                            span#min-area.label.txtcolor--surface.grow 0 m²
+                                            span#max-area.label.txtcolor--surface 500+ m²
+                                        #slider-range-area.slider-range
+                                .flex.session
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Quartos
+                                        .flex.horizontal.btns
+                                            button#bed_0.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(0)') 0
+                                            button#bed_1.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(1)') 1
+                                            button#bed_2.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(2)') 2
+                                            button#bed_3.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(3)') 3
+                                            button#bed_4.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(4)') 4+
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Banheiros
+                                        .flex.horizontal.btns
+                                            button#bad_0.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(0)') 0
+                                            button#bad_1.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(1)') 1
+                                            button#bad_2.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(2)') 2
+                                            button#bad_3.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(3)') 3
+                                            button#bad_4.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(4)') 4+
+                                .footerbtns.flex.session
+                                    .flex.horizontal
+                                        button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect.search_btn
+                                            | Pesquisar
+                                        button.mdl-button.mdl-js-button.mdl-button--colored.mdl-js-ripple-effect.search_btn
+                                            | Cancelar
+                                    .flex.vertical
+                        input#search_input_field.bgcolor--surface.txt-emphasis--excpet(type='text')
+            .header_carousel_title.i-txtcolor--primary
+                | Propriedades em destaque próximos a sua localização
+                a(href='')
+                    i.material-icons.small-ico location_on
+                    | Pedra Mole, Teresina-PI
+            .header_carousel
+                .navigatorArea.flex.center
+                    a#nav_left.navigator.flex.center.btn--accent.i-txtcolor--accent(style='display: none' href='' onclick='return carousel(-1)')
+                        i.material-icons keyboard_arrow_left
+                .area
+                    .container.h_scroll
+                        each row in news
+                            .no-link.carousel_card.bgcolor--surface
+                                a.no-link.i-txtcolor--surface(href='detalhe')
+                                    .image.i-txtcolor--primary(style="background-image : url('images/"+row['imagem']+"')")
+                                        .price
+                                            | R$ #{row['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                    .title.txt-emphasis--medium #{row['titulo']}
+                                    .subtitle.txt-emphasis--high #{row['descricao']}
+                                .divider
+                                .buttons.txt-emphasis--medium
+                                    .button
+                                        i.material-icons local_hotel
+                                    .text.flex.center #{row['banheiros']}
+                                    .button
+                                        i.material-icons meeting_room
+                                    .text.flex.center #{row['quartos']}
+                                    .button
+                                        i.material-icons directions_car
+                                    .text.flex.center #{row['garagem']}
+                                    .button.like
+                                        i.material-icons favorite_border
+                .navigatorArea.flex.center
+                    a#nav_right.navigator.flex.center.btn--accent.i-txtcolor--accent(href='' onclick='return carousel(1)')
+                        i.material-icons keyboard_arrow_right
+            .header_carousel_footer
+                - for(var i = 0; i < 6; i++) {
+                    a.dot(href="", onclick="return carouselSet(" + i + ")")
+                - }
+    #body_page.content_page
+        #body_title.flex.vertical.center
+            span.title.txt-emphasis--high 8.243 Propriedades para venda e aluguel
+            span.subtitle.txt-emphasis--medium Condomínios, apartamentos, casas, terrenos e muito mais
+        .block_split
+            .block.bgcolor--surface.shadow--thin
+                .header.flex.vertical
+                    span.title.txt-emphasis--high Novos imóveis
+                    span.subtitle.txt-emphasis--medium Aproveite as oportunidades
+                .grow.flex.horizontal
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/'+news[0]['imagem']+'")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[0]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[0]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/'+news[1]['imagem']+'")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[1]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[1]['titulo']}
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/'+news[2]['imagem']+'")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[2]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[2]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/'+news[3]['imagem']+'")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[3]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[3]['titulo']}
+                a.no-link.footer.flex.horizontal.center.txt-emphasis--medium.txtcolor(href='imoveis')
+                    span.subtitle Vizualizar todas as propriedades
+                    i.material-icons trending_flat
+            .block.bgcolor--surface.shadow--thin
+                .header.flex.vertical
+                    span.title.txt-emphasis--high Pre-Lançamentos
+                    span.subtitle.txt-emphasis--medium Reserve o seu agora!
+                .grow.flex.horizontal
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[4]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[4]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[4]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[5]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[5]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[5]['titulo']}
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[6]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[6]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[6]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[7]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[7]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[7]['titulo']}
+                a.no-link.footer.flex.horizontal.center.txt-emphasis--medium.txtcolor(href='imoveis')
+                    span.subtitle Vizualizar todas as propriedades
+                    i.material-icons trending_flat
+        .block_split
+            .block.block3.bgcolor--surface.shadow--thin
+                .header.flex.vertical
+                    span.title.txt-emphasis--high Destaques da semana
+                    span.subtitle.txt-emphasis--medium Veja estes imóveis incríveis
+                .grow.flex.horizontal
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/'+ news[4]['imagem'] +'")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[4]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[4]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/'+ news[5]['imagem'] +'")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[5]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[5]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/'+ news[6]['imagem'] +'")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[6]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[6]['titulo']}
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[7]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[7]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[7]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[8]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[8]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[8]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[9]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[9]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[9]['titulo']}
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[10]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[10]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[10]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[11]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[11]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[11]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[0]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[0]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[0]['titulo']}
+                a.no-link.footer.flex.horizontal.center.txt-emphasis--medium.txtcolor(href='imoveis')
+                    span.subtitle Vizualizar todas as propriedades
+                    i.material-icons trending_flat
+            .block.block3.bgcolor--surface.shadow--thin
+                .header.flex.vertical
+                    span.title.txt-emphasis--high Imóveis mais visualizados
+                    span.subtitle.txt-emphasis--medium Veja o que os outros estão vendo também
+                .grow.flex.horizontal
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[4]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[4]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[4]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[5]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[5]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[5]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[6]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[6]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[6]['titulo']}
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[7]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[7]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[7]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[8]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[8]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[8]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[9]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[9]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[9]['titulo']}
+                    .flex.vertical.grow
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[10]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[10]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[10]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[11]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[11]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[11]['titulo']}
+                        a.no-link.i-txtcolor--surface.image.flex.horizontal.grow(href='detalhe', style='background-image : url("images/' + news[0]['imagem'] + '")')
+                            .bar.flex.vertical.bg-color--dark
+                                span.title.i-txtcolor--dark R$ #{news[0]['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                span.subtitle.i-txtcolor--dark #{news[0]['titulo']}
+                a.no-link.footer.flex.horizontal.center.txt-emphasis--medium.txtcolor(href='imoveis')
+                    span.subtitle Vizualizar todas as propriedades
+                    i.material-icons trending_flat

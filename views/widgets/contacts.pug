@@ -1,0 +1,20 @@
+link(rel='stylesheet', href='stylesheets/widgets/contacts.css')
+#itens_contact.bgcolor--surface.shadow--thin
+    .title.txt-emphasis--high Mais informações
+    .subtitle.txt-emphasis--medium Liga para ter mais detalhes
+    button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect 86 9 9955-5555
+    .flex.vertical.center
+        .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input#contact_name.mdl-textfield__input(type='text')
+            label.mdl-textfield__label(for='contact_name') Nome
+        .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input#contact_email.mdl-textfield__input(type='text')
+            label.mdl-textfield__label(for='contact_email') Email
+        .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input#contact_number.mdl-textfield__input(type='text')
+            label.mdl-textfield__label(for='contact_number') Telefone
+        .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            textarea#contact_message.mdl-textfield__input(rows=4)
+            label.mdl-textfield__label(for='contact_message') Message
+    .subtitle.txt-emphasis--medium Ao nos enviar suas informações, você concorda com os Termos de Uso e Política de Privacidade
+    button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect Enviar

@@ -1,0 +1,260 @@
+extends layout
+block page
+    link(rel='stylesheet', href='stylesheets/imoveis.css')
+    script(src="javascripts/imoveis.js")
+    script.
+        $(function () {
+            // Search  Bar
+            const sBar = $('#search_bar');
+            const bPage = $('#body_page');
+            const offset = sBar.offset().top;
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > offset) {
+                    sBar.addClass('sticky');
+                    bPage.addClass('sticky-spacer');
+                } else {
+                    sBar.removeClass('sticky');
+                    bPage.removeClass('sticky-spacer');
+                }
+            });
+            // Search Field
+            if (window.matchMedia('(max-width:512px)').matches) {
+                $("#search_input_field").attr("placeholder", "Pesquisar...");
+            } else {
+                $("#search_input_field").attr("placeholder", "Pesquisar por tipo, cidade, lugar, pontos de referência e etc");
+            }
+            $(window).resize(function () {
+                if (window.matchMedia('(max-width:512px)').matches) {
+                    $("#search_input_field").attr("placeholder", "Pesquisar...");
+                } else {
+                    $("#search_input_field").attr("placeholder", "Pesquisar por tipo, cidade, lugar, pontos de referência e etc");
+                }
+            });
+            // Search show
+            $('#btn_grid').click(function (e) {
+                var view = $('#body_content');
+                if (view.hasClass('list_mode')) {
+                    view.removeClass('list_mode');
+                }
+            });
+            $('#btn_list').click(function (e) {
+                var view = $('#body_content');
+                if (!view.hasClass('list_mode')) {
+                    view.addClass('list_mode');
+                }
+            });
+            // Horizontal Sliders
+            $("#slider-range-price").slider({
+                range: true,
+                min: 0,
+                max: 1000000,
+                values: [0, 1000000],
+                slide: function (event, ui) {
+                    $("#min-price").text("$" + ui.values[0].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, "."));
+                    if (ui.values[1] === 1000000) {
+                        $("#max-price").text("$1.000.000+");
+                    } else {
+                        $("#max-price").text("$" + ui.values[1].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, "."));
+                    }
+                }
+            });
+            $("#slider-range-area").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [0, 500],
+                slide: function (event, ui) {
+                    $("#min-area").text(ui.values[0].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, ".") + " m²");
+                    if (ui.values[1] === 500) {
+                        $("#max-area").text("500+ m²");
+                    } else {
+                        $("#max-area").text(ui.values[1].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, ".") + " m²");
+                    }
+                }
+            });
+            $("#slider-range-ground").slider({
+                range: true,
+                min: 0,
+                max: 1000,
+                values: [0, 1000],
+                slide: function (event, ui) {
+                    $("#min-ground").text(ui.values[0].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, ".") + " m²");
+                    if (ui.values[1] === 1000) {
+                        $("#max-ground").text("1.000+ m²");
+                    } else {
+                        $("#max-ground").text(ui.values[1].toString().replace(/\\B(?=(\d{3})+(?!\d))/g, ".") + " m²");
+                    }
+                }
+            });
+        });
+        // Search Filter
+        $("body").click(function (e) {
+            var target = $(e.target);
+            if (target.parents('#btn_filter').length === 1) {
+                $("#search_filter").fadeToggle(function () {
+                    if ($(this).is(":visible")) {
+                        $(this).css('display', 'flex');
+                    }
+                });
+            } else if (target.attr('id') !== 'search_bar' && target.parents('#search_bar').length === 0) {
+                $("#search_filter").fadeOut();
+            }
+        });
+        function search_order(order) {
+            $('#country').val(order);
+        }
+        function bedToogle(pos) {
+            $('#bed_' + pos).toggleClass('btn--primary').toggleClass('btn--gray');
+        }
+        function badToogle(pos) {
+            $('#bad_' + pos).toggleClass('btn--primary').toggleClass('btn--gray');
+        }
+        function floorToogle(pos) {
+            $('#floor_' + pos).toggleClass('btn--primary').toggleClass('btn--gray');
+        }
+        function typeToogle(pos) {
+            $('#type_' + pos).toggleClass('btn--primary').toggleClass('btn--gray');
+        }
+    main.content_fit
+        #search_bar.content_fit.bgcolor--primary.bgcolor--surface.shadow--small
+            .relative
+                #search_filter.flex.vertical.bgcolor--surface.shadow--small
+                    .divider
+                    .content_page.flex.vertical
+                        .inscroll
+                            .flex.vertical
+                                .flex.session
+                                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                                        input#p_area.mdl-textfield__input(type='text')
+                                        label.mdl-textfield__label(for='p_area') Localização
+                                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.hidesmall
+                                        input#p_facilidades.mdl-textfield__input(type='text')
+                                        label.mdl-textfield__label(for='p_facilidades') Facilidades(Separe com vírgulas)
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Tipo
+                                        .flex.horizontal.btns
+                                            button#type_0.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(0)') Casa
+                                            button#type_1.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(1)') Apto
+                                            button#type_2.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(2)') Lote
+                                            button#type_3.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(3)') Sítio
+                                            button#type_4.mdl-button.mdl-js-button.btn--primary(onclick='typeToogle(4)') Kitnet
+                                .flex.session
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Preço
+                                        .flex.horizontal
+                                            span#min-price.label.txtcolor--surface.grow $0
+                                            span#max-price.label.txtcolor--surface $1.000.000+
+                                        #slider-range-price.slider-range
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Área
+                                        .flex.horizontal
+                                            span#min-area.label.txtcolor--surface.grow 0 m²
+                                            span#max-area.label.txtcolor--surface 500+ m²
+                                        #slider-range-area.slider-range
+                                    .flex.vertical.hidesmall
+                                        span.label.txtcolor--primary Terreno
+                                        .flex.horizontal
+                                            span#min-ground.label.txtcolor--surface.grow 0 m²
+                                            span#max-ground.label.txtcolor--surface 1.000+ m²
+                                        #slider-range-ground.slider-range
+                                .flex.session
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Quartos
+                                        .flex.horizontal.btns
+                                            button#bed_0.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(0)') 0
+                                            button#bed_1.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(1)') 1
+                                            button#bed_2.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(2)') 2
+                                            button#bed_3.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(3)') 3
+                                            button#bed_4.mdl-button.mdl-js-button.btn--primary(onclick='bedToogle(4)') 4+
+                                    .flex.vertical
+                                        span.label.txtcolor--primary Banheiros
+                                        .flex.horizontal.btns
+                                            button#bad_0.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(0)') 0
+                                            button#bad_1.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(1)') 1
+                                            button#bad_2.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(2)') 2
+                                            button#bad_3.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(3)') 3
+                                            button#bad_4.mdl-button.mdl-js-button.btn--primary(onclick='badToogle(4)') 4+
+                                    .flex.vertical.hidesmall
+                                        span.label.txtcolor--primary Pisos
+                                        .flex.horizontal.btns
+                                            button#floor_0.mdl-button.mdl-js-button.btn--primary(onclick='floorToogle(0)') 0
+                                            button#floor_1.mdl-button.mdl-js-button.btn--primary(onclick='floorToogle(1)') 1
+                                            button#floor_2.mdl-button.mdl-js-button.btn--primary(onclick='floorToogle(2)') 2
+                                            button#floor_3.mdl-button.mdl-js-button.btn--primary(onclick='floorToogle(3)') 3
+                                            button#floor_4.mdl-button.mdl-js-button.btn--primary(onclick='floorToogle(4)') 4+
+                        .footerbtns.flex.session
+                            .flex.horizontal
+                                button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect.search_btn
+                                    | Filtrar
+                                button.mdl-button.mdl-js-button.mdl-button--colored.mdl-js-ripple-effect.search_btn
+                                    | Cancelar
+            #search_field.flex.horizontal
+                i.material-icons.txt-emphasis--medium search
+                input#search_input_field.input(type='text' placeholder='Pesquisar por tipo, cidade, lugar, pontos de referência e etc')
+                span.search_extra Ordenar por:
+                #search_order.mdl-textfield.mdl-js-textfield.getmdl-select.search_extra
+                    input#country.mdl-textfield__input(value='Popularidade' readonly='')
+                    ul.mdl-menu.mdl-menu--bottom-left.mdl-js-menu(for='country')
+                        li.mdl-menu__item(onclick="search_order('Popularidade')") Popularidade
+                        li.mdl-menu__item(onclick="search_order('Data de envio')") Data de envio
+                        li.mdl-menu__item(onclick="search_order('Menor Preço')") Menor Preço
+                        li.mdl-menu__item(onclick="search_order('Maior Preço')") Maior Preço
+                        li.mdl-menu__item(onclick="search_order('Menor Área')") Menor Área
+                        li.mdl-menu__item(onclick="search_order('Maior Área')") Maior Área
+                button#btn_grid.mdl-button.mdl-js-button.mdl-button--icon.txt-emphasis--medium.search_extra
+                    i.material-icons apps
+                button#btn_list.mdl-button.mdl-js-button.mdl-button--icon.txt-emphasis--medium.search_extra
+                    i.material-icons view_list
+                button#btn_filter.mdl-button.mdl-js-button.mdl-button--icon.txt-emphasis--medium
+                    i.material-icons filter_list
+        #body_page.content_page
+            #body_title.flex.vertical.center
+                span.title.txt-emphasis--high
+                    if found === 0
+                        | Nenhum resultado encontrado
+                    else if found === 1
+                        | #{found} Propriedade encontrada
+                    else
+                        | #{found} Propriedades encontradas
+                span.subtitle.txt-emphasis--medium Aplique filtros e ordene a exibição de acordo com o que preferir
+            #body_content.list_mode
+                #itens_view
+                    .grid
+                        each row in rows
+                            .grid_item
+                                .grid_card.bgcolor--surface.shadow--thin(onclick="window.location.href='detalhe?id=" + row['id']+"'")
+                                    .split
+                                        .image.i-txtcolor--primary(style="background-image : url('images/"+row['imagem']+"')")
+                                            .price R$ #{row['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                    .split
+                                        .relative
+                                            .price R$ #{row['preco'].toFixed(2).replace(/\./g, ',').replace(/\d(?=(\d{3})+,)/g, '$&.')}
+                                        .title.txt-emphasis--medium #{row['endereco']}
+                                        .subtitle.txt-emphasis--high #{row['titulo']}
+                                        .divider
+                                        .buttons.txt-emphasis--medium
+                                            .button
+                                                i.material-icons local_hotel
+                                            .text.flex.center #{row['quartos']}
+                                            .button
+                                                i.material-icons meeting_room
+                                            .text.flex.center #{row['salas']}
+                                            .button
+                                                i.material-icons directions_car
+                                            .text.flex.center #{row['garagem']}
+                                            .button.like
+                                                i.material-icons favorite_border
+                    .grid_footer.flex.center.horizontal
+                        if currentPage > 0
+                            .navigator.grid_prev.flex.center.hovercolor--accent.i-txtcolor--accent(onclick="navigate('-1')")
+                                i.material-icons arrow_left
+                        - var j = 0;
+                        - while (j++ < found / 10)
+                            .navigator.grid_page.flex.center.hovercolor--accent.i-txtcolor--accent(onclick="navigate('"+(j-1)+"')")
+                                | #{j}
+                        if currentPage < found / 10 - 1
+                            .navigator.grid_next.flex.center.hovercolor--accent.i-txtcolor--accent(onclick="navigate('+1')")
+                                i.material-icons arrow_right
+                #itens_bar
+                    include widgets/news
+                    include widgets/newsletters

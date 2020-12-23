@@ -1,0 +1,88 @@
+doctype html
+html(lang='pt-br')
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width, user-scalable=no')
+        title Imobiliária
+        link(rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons')
+        link(rel='stylesheet' href='https://code.getmdl.io/1.3.0/material.red-amber.min.css')
+        link(rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+        script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
+        script(type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js')
+        script(defer='' src='https://code.getmdl.io/1.3.0/material.min.js')
+        link(rel='stylesheet' href='stylesheets/colors.css')
+        link(rel='stylesheet' href='stylesheets/layout.css')
+    body
+        header.content_fit.bgcolor--primary
+            #header_data.content_fit.bgcolor--primary--dark
+                .content_page.i-txtcolor--primary--dark.flex.horizontal
+                    .data
+                        i.material-icons call
+                        span 86 9 9555-5555
+                        i.material-icons email
+                        span adm@email.com
+                    .button.flex.center.hovercolor--primary--dark
+                        img(src='images/ico_youtube.png')
+                    .button.flex.center.hovercolor--primary--dark
+                        img(src='images/ico_insta.png')
+                    .button.flex.center.hovercolor--primary--dark
+                        img(src='images/ico_face.png')
+            #header_page.content_page
+                #header_menu.flex.horizontal
+                    img#header_logo(src='images/logo.png', width='128px', height='80px')
+                    a.header_button(class=(page==='home' ? 'txtcolor--accent' : 'i-txtcolor--primary'), href='/') HOME
+                    a.header_button(class=(page==='imoveis' ? 'txtcolor--accent' : 'i-txtcolor--primary'), href='/imoveis') IMÓVEIS
+                    a.header_button(class=(page==='enviar' ? 'txtcolor--accent' : 'i-txtcolor--primary'), href='/enviar') ENVIAR
+                    a.header_button(class=(page==='contatos' ? 'txtcolor--accent' : 'i-txtcolor--primary'), href='/contatos') CONTATOS
+                    a.header_button(class=(page==='equipe' ? 'txtcolor--accent' : 'i-txtcolor--primary'), href='/equipe') EQUIPE
+                    a.header_button(class=(page==='infos' ? 'txtcolor--accent' : 'i-txtcolor--primary'), href='/info') INFORMAÇÕES
+                    .relative
+                        button#demo-menu-lower-right.mdl-button.mdl-js-button.mdl-button--icon
+                            i.material-icons.i-txtcolor--primary more_vert
+                        ul.mdl-menu.mdl-menu--bottom-right.mdl-js-menu.mdl-js-ripple-effect(for='demo-menu-lower-right')
+                            li.mdl-menu__item
+                                a(href='/').i-txtcolor--surface.txt-emphasis--medium Home
+                            li.mdl-menu__item
+                                a(href='/imoveis').i-txtcolor--surface.txt-emphasis--medium Imóveis
+                            li.mdl-menu__item
+                                a(href='/enviar').i-txtcolor--surface.txt-emphasis--medium Enviar
+                            li.mdl-menu__item
+                                a(href='/contatos').i-txtcolor--surface.txt-emphasis--medium Contatos
+                            li.mdl-menu__item
+                                a(href='/equipe').i-txtcolor--surface.txt-emphasis--medium Equipe
+                            li.mdl-menu__item
+                                a(href='/info').i-txtcolor--surface.txt-emphasis--medium Informações
+    main.content_fit
+        block page
+    footer.content_fit.flex.vertical.bgcolor--primary.shadow--small--up
+        #footer_up.content_page.flex.horizontal.center
+            .footer_section
+                .title.i-txtcolor--primary.txt-emphasis--high Nome da Imobiliária
+                .subtitle.i-txtcolor--primary.txt-emphasis--medium Slogan da empresa
+                .location.i-txtcolor--primary.txt-emphasis--high Localizada em certo ponto do mundo
+                .number.i-txtcolor--primary.txt-emphasis--high 86 9 9955-5555
+                .number.i-txtcolor--primary.txt-emphasis--high 86 9 9955-5555
+                .email.i-txtcolor--primary.txt-emphasis--high adm@email.com
+            .footer_section.section_news
+                .news.i-txtcolor--primary.txt-emphasis--high Novidades
+                .divider--dark
+                a.anew.flex.vertical.no-link.i-txtcolor--primary(href='home.html')
+                    span.title.txt-emphasis--high Nome do ultimo empreendimento
+                    span.subtitle.txt-emphasis--medium Dados interessantes
+                a.anew.flex.vertical.no-link.i-txtcolor--primary(href='home.html')
+                    span.title.txt-emphasis--high Nome do ultimo empreendimento
+                    span.subtitle.txt-emphasis--medium Dados interessantes
+                a.anew.flex.vertical.no-link.i-txtcolor--primary(href='home.html')
+                    span.title.txt-emphasis--high Nome do ultimo empreendimento
+                    span.subtitle.txt-emphasis--medium Dados interessantes
+            .footer_section
+                iframe(width='340px', height='180px', style='max-width:340px;max-height:180px;display:inline-block', src='https://www.facebook.com/v2.5/plugins/page.php?adapt_container_width=true&app_id=217780371604666&channel=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2FQX17B8fU-Vm.js%3Fversion%3D42%23cb%3Df2bce7f12d21968%26domain%3Dfoccoimobiliariathe.com.br%26origin%3Dhttp%253A%252F%252Ffoccoimobiliariathe.com.br%252Ffd7c0f24b5a634%26relation%3Dparent.parent&container_width=570&hide_cover=false&href=https%3A%2F%2Fwww.facebook.com%2Ffoccoimobiliariathe&locale=en_US&sdk=joey&show_facepile=true&show_posts=false&small_header=false')
+        #footer_down.bgcolor--primary--dark
+            div
+                a.no-link.i-txtcolor--primary--dark(href='/contatos') Contatos
+                a.no-link.i-txtcolor--primary--dark(href='/info') Informações
+                a.no-link.i-txtcolor--primary--dark(href='/equipe') Equipe
+        #btn_up
+            .flex.center.hovercolor--accent.i-txtcolor--accent--dark
+                i.material-icons keyboard_arrow_up

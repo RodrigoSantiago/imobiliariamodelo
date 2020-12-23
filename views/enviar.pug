@@ -1,0 +1,274 @@
+extends layout
+
+block page
+    link(rel='stylesheet' href='stylesheets/enviar.css')
+    script.
+        $(function () {
+            $("#sortable").sortable({
+                revert: true,
+                items: "> *:not(.unsortable)"
+            });
+            $("#sortable").disableSelection();
+            $("#imgfile_0").change(function () {
+                readURL(this);
+            });
+            $('#btnAdd').off('click').on('click', function () {
+                document.getElementById('imgfile_0').click();
+            });
+            for (var i = 0; i < 4; i++) {
+                const ti = i;
+                $('#nav' + i).click(function () {
+                    toScreen(ti);
+                });
+            }
+        });
+        var screen = 0;
+        var anim = false;
+        function toNextScreen() {
+            if (screen < 3) {
+                toScreen(screen + 1);
+            }
+        }
+        function toScreen(scr) {
+            if (!anim && screen !== scr) {
+                var oldScr = screen;
+                screen = scr;
+                anim = true;
+                $('#nav' + oldScr).switchClass('btn--primary', 'btn--accent', 500);
+                $('#nav' + scr).switchClass('btn--accent', 'btn--primary', 500);
+                $('#nav' + oldScr + ' .triangle').fadeOut(function () {
+                    $('#nav' + scr + ' .triangle').fadeIn();
+                });
+                $('#send' + oldScr).fadeOut(function () {
+                    $('#send' + scr).fadeIn(function () {
+                        anim = false;
+                    });
+                })
+            }
+        }
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                var i = 0;
+                var t = $("#img_" + i);
+                while (t.length !== 0) {
+                    t = $("#img_" + ++i);
+                }
+                $(input).after('<input id="imgfile_' + (i + 1) + '" type="file" style="display: none;" onchange="readURL(this)">');
+                $('#btnAdd').off('click').on('click', function () {
+                    document.getElementById('imgfile_' + (i + 1)).click();
+                });
+                $('#btnAdd').before('<div id="img_' + i + '" class="image"></div>');
+                reader.onload = function (e) {
+                    $('#img_' + i).css('background-image', 'url(' + e.target.result + ')');
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    #body_page.content_page
+        #body_title.flex.vertical.center
+            span.title.txt-emphasis--high Preencha o formulário completo
+            span.subtitle.txt-emphasis--medium Quanto mais dados você colocar, mais rápido e fácil será todo o processo
+        .navigation.flex.horizontal.center
+            #nav0.navigator.flex.center.btn--primary
+                | 1
+                .relative
+                    .triangle
+            #nav1.navigator.flex.center.btn--accent
+                | 2
+                .relative
+                    .triangle(style='display: none')
+            #nav2.navigator.flex.center.btn--accent
+                | 3
+                .relative
+                    .triangle(style='display: none')
+            #nav3.navigator.flex.center.btn--accent
+                | 4
+                .relative
+                    .triangle(style='display: none')
+        #send0.sendcard.bgcolor--surface.shadow--small.flex.vertical.center
+            .flex.vertical
+                span.title.txtcolor--primary Dados Principais
+                .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#p_titulo.mdl-textfield__input(type='text')
+                    label.mdl-textfield__label(for='p_titulo') Título
+                .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#p_descricao.mdl-textfield__input(type='text')
+                    label.mdl-textfield__label(for='p_descricao') Descrição
+                .area_itens.flex.horizontal
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_preco.mdl-textfield__input(type='text' pattern='[0-9]*(,[0-9]+)?')
+                        label.mdl-textfield__label(for='p_preco') Preço
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_min.mdl-textfield__input(type='text' pattern='[0-9]*(,[0-9]+)?')
+                        label.mdl-textfield__label(for='p_min') *Mínimo
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_max.mdl-textfield__input(type='text' pattern='[0-9]*(,[0-9]+)?')
+                        label.mdl-textfield__label(for='p_max') *Máximo
+                        span.mdl-textfield__error Número inválido
+                .area_itens.flex.horizontal
+                    label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_financiavel')
+                        input#p_financiavel.mdl-checkbox__input(type='checkbox')
+                        span.mdl-checkbox__label Financiável
+                    label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_negociavel')
+                        input#p_negociavel.mdl-checkbox__input(type='checkbox')
+                        span.mdl-checkbox__label Negociável
+                .bot_base.flex.horizontal.center(onclick='toNextScreen()')
+                    .bot_btn.flex.center.bgcolor--primary.shadow--big
+                        i.material-icons.i-txtcolor--primary trending_flat
+        #send1.sendcard.bgcolor--surface.shadow--small.flex.vertical.center(style='display: none')
+            .flex.vertical
+                span.title.txtcolor--primary Detalhes
+                .area_itens.flex.horizontal
+                    .inputfield.mdl-textfield.mdl-js-textfield.getmdl-select.search_extra.mdl-textfield--floating-label
+                        input#p_tipo.mdl-textfield__input(value='' readonly='')
+                        label.mdl-textfield__label(for='p_tipo') Tipo
+                        ul.mdl-menu.mdl-menu--bottom-left.mdl-js-menu(for='p_tipo')
+                            li.mdl-menu__item(onclick="search_order('Casa')") Casa
+                            li.mdl-menu__item(onclick="search_order('Apartamento')") Apartamento
+                            li.mdl-menu__item(onclick="search_order('Terreno')") Terreno
+                            li.mdl-menu__item(onclick="search_order('Sítio')") Sítio
+                            li.mdl-menu__item(onclick="search_order('Fazenda')") Fazenda
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_pisos.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_pisos') Pisos
+                        span.mdl-textfield__error Número inválido
+                .area_itens.flex.horizontal
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_area.mdl-textfield__input(type='text' pattern='[0-9]*(,[0-9]+)?')
+                        label.mdl-textfield__label(for='p_area') Área Construída
+                        span.mdl-textfield__error Número inválido
+                    .flex.center.txt-emphasis--high m²
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_terreno.mdl-textfield__input(type='text' pattern='[0-9]*(,[0-9]+)?')
+                        label.mdl-textfield__label(for='p_terreno') Terreno Total
+                        span.mdl-textfield__error Número inválido
+                    .flex.center.txt-emphasis--high m²
+                .area_itens.flex.horizontal
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_quartos.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_quartos') Quartos
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_suites.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_suites') *Suites
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_master.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_master') *Master
+                        span.mdl-textfield__error Número inválido
+                .area_itens.flex.horizontal
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_salas.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_salas') Salas
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_jantar.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_jantar') *Jantar
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_privativa.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_privativa') *Privativa
+                        span.mdl-textfield__error Número inválido
+                .area_itens.flex.horizontal
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_cozinha.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_cozinha') Cozinha
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_areaservico.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_areaservico') Área de Serviço
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_despensa.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_despensa') Despensa
+                        span.mdl-textfield__error Número inválido
+                .area_itens.flex.horizontal
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_banheiros.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_banheiros') Banheiros
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_garagem.mdl-textfield__input(type='text' pattern='[0-9]*')
+                        label.mdl-textfield__label(for='p_garagem') Garagem
+                        span.mdl-textfield__error Número inválido
+                .bot_base.flex.horizontal.center(onclick='toNextScreen()')
+                    .bot_btn.flex.center.bgcolor--primary.shadow--big
+                        i.material-icons.i-txtcolor--primary trending_flat
+        #send2.sendcard.bgcolor--surface.shadow--small.flex.vertical.center(style='display: none')
+            .flex.vertical
+                span.title.txtcolor--primary Facilidades
+                .area_itens.flex.horizontal
+                    .flex.vertical
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f1')
+                            input#p_f1.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Elevador
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f2')
+                            input#p_f2.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Área de Lazer
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f3')
+                            input#p_f3.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Playground
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f4')
+                            input#p_f4.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Piscina
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f5')
+                            input#p_f5.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Academia
+                    .flex.vertical
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f6')
+                            input#p_f6.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Campo Esportivo
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f7')
+                            input#p_f7.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Salão de Festas
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f8')
+                            input#p_f8.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Churasqueira
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f9')
+                            input#p_f9.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Câmeras
+                        label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_f10')
+                            input#p_f10.mdl-checkbox__input(type='checkbox')
+                            span.mdl-checkbox__label Área Comercial
+                span.title.txtcolor--primary Localização
+                .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#p_localizacao.mdl-textfield__input(type='text')
+                    label.mdl-textfield__label(for='p_localizacao') Endereço
+                .area_itens.flex.horizontal.center
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_latitude.mdl-textfield__input(type='text' pattern='-?[0-9]*(,[0-9]+)?')
+                        label.mdl-textfield__label(for='p_latitude') Latitude
+                        span.mdl-textfield__error Número inválido
+                    .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                        input#p_longitude.mdl-textfield__input(type='text' pattern='-?[0-9]*(,[0-9]+)?')
+                        label.mdl-textfield__label(for='p_longitude') Longitude
+                        span.mdl-textfield__error Número inválido
+                    button.mdl-button.mdl-js-button.mdl-button--icon.mdl-button--colored
+                        i.material-icons location_on
+                label.mdl-checkbox.mdl-js-checkbox.mdl-js-ripple-effect(for='p_ocultar')
+                    input#p_ocultar.mdl-checkbox__input(type='checkbox')
+                    span.mdl-checkbox__label Ocultar localização exata
+                .bot_base.flex.horizontal.center(onclick='toNextScreen()')
+                    .bot_btn.flex.center.bgcolor--primary.shadow--big
+                        i.material-icons.i-txtcolor--primary trending_flat
+        #send3.sendcard.bgcolor--surface.shadow--small.flex.vertical.center(style='display: none')
+            .flex.vertical
+                span.title.txtcolor--primary Mídias
+                #galery_drag.bgcolor--background
+                    #sortable
+                        input#imgfile_0(type='file' style='display: none;')
+                        #btnAdd.image.unsortable.bg-color--dark
+                    .drop
+                        div
+                            i.material-icons save_alt
+                            br
+                            | Slote aqui
+                .inputfield.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#p_video.mdl-textfield__input(type='text')
+                    label.mdl-textfield__label(for='p_video') Vídeo
+                .bot_base.flex.horizontal.center
+                    .bot_btn.flex.center.bgcolor--primary.shadow--big
+                        i.material-icons.i-txtcolor--primary done

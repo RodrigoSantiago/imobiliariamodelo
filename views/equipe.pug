@@ -1,0 +1,17 @@
+extends layout
+
+block page
+    link(rel='stylesheet', href='stylesheets/equipe.css')
+
+    #body_page.content_page
+        #body_title.flex.vertical.center
+            span.title.txt-emphasis--high Titulo da propriedade contendo o nome principal
+            span.subtitle.txt-emphasis--medium Localização e chamada principal do empreendimento
+        .grid
+            -var i = 0;
+            -while(i ++ < 5)
+                .people_card.flex.vertical.center.bgcolor--surface.shadow--thin
+                    .image.bgcolor--surface.shadow--small
+                    .title.txt-emphasis--high Nome
+                    .subtitle.txt-emphasis--medium Cargo
+                    .content.txt-emphasis--medium Algumas informações sobre este membro da equipe e suas realizações

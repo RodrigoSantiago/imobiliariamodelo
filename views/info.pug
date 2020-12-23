@@ -1,0 +1,20 @@
+extends layout
+block page
+    link(rel='stylesheet', href='stylesheets/info.css')
+
+    #body_page.content_page
+        #body_title.flex.vertical.center
+            span.title.txt-emphasis--high Perguntas frequentes
+            span.subtitle.txt-emphasis--medium Veja aqui as perguntas mias feitas e as respostas
+        .flex.horizontal
+            #itens_quests.flex.vertical
+                -var i = 0;
+                -while(i ++ < 5)
+                    .quest_card.bgcolor--surface.shadow--thin
+                        .title.txt-emphasis--high Pergunta frequente feita aqui ?
+                        .subtitle.txt-emphasis--medium Responsata com vários paragrafos lorem ipsum dolor siotSed posuere consectetur est at lobortis. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam porta sem malesuada magna mollis euismod. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+            #itens_bar.flex.vertical
+                include widgets/contacts
+            .relative
+                #btn_call.center.bgcolor--accent.shadow--small
+                    i.material-icons.i-txtcolor--accent call
