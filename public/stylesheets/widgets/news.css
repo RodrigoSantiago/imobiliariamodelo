@@ -1,0 +1,40 @@
+#itens_news {
+    border-radius: 2px;
+    margin-bottom: 16px;
+}
+#itens_news > .title {
+    margin: 32px 32px 0 32px;
+    font-size: medium;
+    font-weight: 500;
+}
+#itens_news > .subtitle {
+    margin: 0 32px 24px 32px;
+    font-size: smaller;
+}
+#itens_news .entry {
+    width: 100%;
+    justify-items: left;
+    align-items: center;
+    cursor: pointer;
+}
+#itens_news .entry .title {
+    font-size: small;
+    font-weight: 500;
+}
+#itens_news .entry .subtitle {
+    font-size: smaller;
+}
+#itens_news .entry > .image {
+    width: 64px;
+    height: 40px;
+    margin: 16px;
+    border-radius: 2px;
+
+    background: no-repeat center center;
+    background-size: cover;
+}
+#itens_news > .view_more {
+    font-size: smaller;
+    padding: 4px;
+    cursor: pointer;
+}

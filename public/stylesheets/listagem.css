@@ -1,0 +1,236 @@
+#search_bar {
+    height: 64px;
+    z-index: 20;
+    margin-top: 0 !important;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+.sticky-spacer {
+    margin-top: 112px;
+}
+#search_field {
+    height: 100%;
+    align-items: center;
+    white-space: nowrap;
+}
+#search_field > * {
+    margin: 8px;
+}
+#search_field > *:first-child {
+    margin-left: 16px;
+}
+#search_field > *:last-child {
+    margin-right: 16px;
+}
+#search_field .input {
+    width: 80%;
+    height: 100%;
+    border: 0;
+    padding: 0 20px 0;
+    border-radius: 0 2px 2px 0;
+    box-sizing: border-box;
+    font-size: medium;
+}
+#search_field .input:focus {
+    outline-width: 0;
+}
+#search_order {
+    width: 128px;
+}
+#search_order input {
+    font-size: smaller;
+}
+#search_order ul {
+    width: 128px;
+}
+/****** FILTER ******/
+#search_filter {
+    position: absolute;
+    left: 0;
+    top: 64px;
+    width: 100%;
+    z-index: 20;
+    display: none;
+    padding-bottom: 8px;
+}
+#search_filter .hidesmall {
+    display: flex;
+}
+#search_filter .inscroll {
+    max-height: calc(100vh - 132px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#search_filter .inscroll > div {
+    width: 100%;
+    min-height: 226px;
+    max-height: 226px;
+}
+#search_filter > .divider {
+    margin-bottom: 8px;
+}
+#search_filter .session {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+#search_filter .session > * {
+    margin: 8px;
+    width: calc(33% - 16px);
+}
+#search_filter .inputfield input, #search_filter .inputfield textarea, #search_filter .inputfield label,
+#search_filter .mdl-checkbox , #search_filter .mdl-checkbox__label {
+    font-size: small;
+}
+#search_filter .mdl-textfield--floating-label.is-dirty .mdl-textfield__label,
+#search_filter .mdl-textfield--floating-label.is-focused .mdl-textfield__label{
+    font-size: 12px;
+}
+#search_filter .session .label {
+    font-size: 12px;
+}
+#search_filter .btns button {
+    min-width: 20%;
+    font-size: smaller;
+    padding-left: unset;
+    padding-right: unset;
+    border-radius: 0;
+}
+#search_filter .btns button:first-of-type {
+    border-radius: 2px 0 0 2px;
+}
+#search_filter .btns button:last-of-type {
+    border-radius: 0 2px 2px 0;
+}
+#search_filter .footerbtns {
+    justify-content: left;
+}
+#search_filter .footerbtns button:first-of-type {
+    margin-right: 8px;
+}
+/**************************/
+#body_content {
+    white-space: nowrap;
+    margin: 32px 8px;
+}
+#body_content > .title {
+    margin: 16px 32px;
+    font-weight: bold;
+}
+
+.list_card {
+
+}
+.list_card .title {
+    font-size: small;
+    font-weight: 500;
+}
+.list_card .subtitle {
+    font-size: smaller;
+}
+.list_card .image_wrapper {
+    width: 64px;
+    height: 40px;
+    padding: 16px;
+}
+.list_card .image_wrapper .image {
+    width: 100%;
+    height: 100%;
+    background-color: #5c6bc0;
+    border-radius: 2px;
+}
+.list_card .wrapper {
+    display: flex;
+    flex-direction: row;
+}
+.list_card .wrapper > div.flex.horizontal {
+    align-items: center;
+}
+.list_card .views, .list_card .alarm {
+    padding: 0 8px;
+    border-radius: 2px;
+    font-size: small;
+    font-weight: bold;
+    height: 32px;
+}
+.list_card .views > i, .list_card .alarm > i {
+    margin: 4px;
+}
+.list_card .alarm {
+    margin-left: 8px;
+}
+.list_footer {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    height: 48px;
+    width: 100%;
+}
+.navigator {
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+    border-radius: 100%;
+}
+
+/****************************/
+@media (max-width: 992px) and (min-width:769px) {
+
+}
+
+@media (max-width:768px) and (min-width:513px){
+    #body_content.list_mode #itens_bar {
+        display: none;
+    }
+    .search_extra {
+        display: none;
+    }
+    #search_filter .hidesmall{
+        display: none;
+    }
+    #search_filter .session > * {
+        margin: 8px;
+        width: calc(50% - 16px);
+    }
+}
+
+@media (max-width:512px) {
+    #body_content.list_mode #itens_bar {
+        display: none;
+    }
+    .search_extra {
+        display: none;
+    }
+    .list_card {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+    .list_card .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    #search_filter .hidesmall{
+        display: none;
+    }
+    #search_filter > div {
+        width: calc(100% - 16px);
+    }
+    #search_filter .session {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #search_filter .session > * {
+        margin: 8px;
+        width: calc(100% - 16px);
+    }
+    #search_filter .inscroll > div {
+        width: 100%;
+        min-height: 460px;
+        max-height: 460px;
+        overflow: hidden;
+    }
+}

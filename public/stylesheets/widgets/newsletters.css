@@ -1,0 +1,35 @@
+#itens_news_letters {
+    border-radius: 2px;
+    align-items: center;
+}
+#itens_news_letters .email_ico {
+    width: 54px;
+    height: 54px;
+    border-radius: 100%;
+    border-width: 1px;
+    border-style: solid;
+    margin: 16px;
+}
+#itens_news_letters .title {
+    font-size: medium;
+    font-weight: 500;
+}
+#itens_news_letters .subtitle {
+    font-size: small;
+    white-space: normal;
+    text-align: center;
+}
+#itens_news_letters .inputfield {
+    width: 256px;
+}
+#itens_news_letters .inputfield input {
+    font-size: small;
+    text-align: center;
+}
+#itens_news_letters #btn_signup {
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    margin: 16px;
+    cursor: pointer;
+}

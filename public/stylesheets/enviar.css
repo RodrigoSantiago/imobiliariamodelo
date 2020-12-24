@@ -1,0 +1,111 @@
+.navigation {
+
+}
+.navigator {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    margin: 0 4px 32px 8px;
+}
+.triangle {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 16px solid white;
+
+    left: -12px;
+    bottom: -50px;
+}
+.sendcard {
+    max-width: 600px;
+    width: calc(100% - 16px);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 2px;
+    padding: 32px 0 64px 0;
+    margin-bottom: 16px;
+}
+.sendcard .inputfield input, .sendcard .inputfield textarea, .sendcard .inputfield label, .sendcard .mdl-checkbox ,
+.sendcard .mdl-checkbox__label {
+    font-size: small;
+}
+.sendcard .inputfield textarea {
+    overflow : auto;
+}
+.area_itens {
+    width: 300px;
+}
+.area_itens > div {
+    flex-grow: 1;
+}
+.area_itens > div {
+    margin-right: 8px;
+}
+.area_itens > div:last-of-type {
+    margin-right: 0;
+}
+.sendcard .title {
+    font-size: small;
+    font-weight: bold;
+    margin: 16px 0;
+}
+.bot_base {
+    height: 0;
+}
+.bot_btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    margin-bottom: -128px;
+    cursor: pointer;
+}
+#btn_send {
+    margin-top: 32px;
+    margin-left: auto;
+    width: 96px;
+}
+#galery_drag {
+    min-height: 150px;
+    position: relative;
+
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+#galery_drag #sortable {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+#galery_drag .image {
+    width: 75px;
+    height: 75px;
+    cursor : move;
+    background-size: cover;
+}
+#galery_drag .image.unsortable {
+    cursor : pointer;
+    background-image: url("../images/add.png");
+    background-size: cover;
+}
+#galery_drag .drop {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: none;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+#galery_drag .dragdrop i {
+    font-size: xx-large;
+}

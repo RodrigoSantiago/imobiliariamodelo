@@ -1,0 +1,259 @@
+#body_content {
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+}
+#itens_datail {
+    margin: 0 16px;
+}
+#itens_datail > div {
+    margin-bottom: 16px;
+}
+#itens_datail > div:last-child {
+    margin-bottom: 0;
+}
+#itens_bar {
+    min-width: 300px;
+    max-width: 300px;
+    margin-right: 16px;
+    display: flex;
+    flex-direction: column;
+}
+#main_card {
+    border-radius: 2px;
+    width: 100%;
+    overflow: hidden;
+}
+#main_card > .media {
+    height: 500px;
+    max-height: calc(100vh - 64px);
+    background-color: hotpink;
+}
+#main_card > .data {
+    flex-basis: 100px;
+    padding: 16px 16px 16px 32px;
+    flex-direction: row;
+    font-size: small;
+}
+#main_card > .data > .left, #main_card > .data > .right {
+    flex-direction: row;
+    flex-basis: 100px;
+}
+#main_card > .data .name {
+    font-weight: bold;
+    min-width: 100px;
+}
+#main_card > .data .value {
+}
+#main_card > .main_data {
+    flex-basis: 100px;
+    padding: 24px 32px 24px 32px;
+    flex-direction: row;
+    font-size: larger;
+    align-items: center;
+    justify-items: center;
+}
+#main_card > .main_data > .left, #main_card > .data > .right {
+    flex-direction: row;
+}
+#main_card > .main_data .name {
+    font-weight: bold;
+    margin-right: 48px;
+}
+#main_card > .main_data .value {
+    font-size: small;
+}
+#main_card > .main_data .tag {
+    width: 96px;
+    height: 24px;
+    border-radius: 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: smaller;
+}
+#env_card {
+    border-radius: 2px;
+    width: 100%;
+}
+#env_card > .title {
+    margin: 32px 32px 8px 32px;
+    font-size: medium;
+    font-weight: bold;
+}
+#env_card > .subtitle {
+    margin: 0 32px 24px 32px;
+    font-size: small;
+}
+#env_card > .tags {
+    margin: 0 32px 32px 32px;
+}
+#env_card > .tags > .tag {
+    margin: 8px 8px 0 auto;
+    padding: 8px 16px;
+    border-radius: 2px;
+    display: block;
+    float: left;
+}
+#env_card > .tags > .tag:first-child {
+    margin-left: 0;
+}
+#overview_card {
+    border-radius: 2px;
+    width: 100%;
+}
+#overview_card > .title {
+    margin: 32px 32px 8px 32px;
+    font-size: medium;
+    font-weight: bold;
+}
+#overview_card > .content {
+    margin: 0 32px 32px 32px;
+    font-size: small;
+}
+/**     MEDIA       **/
+.media .navigation {
+    width: 100%;
+    position: absolute;
+    bottom: -18px;
+    pointer-events:none;
+}
+.media .navigator {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px;
+    pointer-events:auto;
+    z-index: 1100;
+}
+/** GALERY **/
+.media #galery {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.media #galery .left {
+    position: absolute;
+    left: 0;
+    top: 45%;
+    z-index : 5;
+}
+.media #galery .right {
+    position: absolute;
+    right: 0;
+    top: 45%;
+    z-index : 5;
+}
+.media #galery .image {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    display: none;
+}
+.media #galery .image:first-child {
+    display: block;
+}
+#galery .img {
+    background: no-repeat center center;
+    background-size: cover;
+}
+#plan .img {
+    background: no-repeat center center;
+    background-size: contain;
+}
+/** VIDEO **/
+.media #video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: black;
+
+    display: none;
+}
+.media #video > div {
+    width: 100%;
+    height: calc(100% - 40px);
+}
+.media #plan {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    display: none;
+}
+.media #map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    display: none;
+}
+/** PLAN **/
+.media #plan {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.media #plan .left {
+    position: absolute;
+    left: 0;
+    top: 45%;
+    z-index : 5;
+}
+.media #plan .right {
+    position: absolute;
+    right: 0;
+    top: 45%;
+    z-index : 5;
+}
+.media #plan .floor {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+    display: none;
+}
+.media #plan .floor:first-child {
+    display: block;
+}
+/** MAP **/
+#mapid {
+    height: 100%;
+    width: 100%;
+}
+@media (max-width: 992px) and (min-width:769px) {
+    #itens_bar {
+        display: none;
+    }
+}
+
+@media (max-width:768px) and (min-width:513px) {
+    #main_card > .data > .left, #main_card > .data > .right, #main_card > .main_data > .left {
+        flex-direction: column;
+    }
+    #main_card > .data .name {
+        margin-bottom: 4px;
+    }
+    #itens_bar {
+        display: none;
+    }
+}
+
+@media (max-width:512px) {
+    #main_card > .data > .left, #main_card > .data > .right, #main_card > .main_data > .left {
+        flex-direction: column;
+    }
+    #main_card > .data .name {
+        margin-bottom: 4px;
+    }
+    #itens_bar {
+        display: none;
+    }
+}

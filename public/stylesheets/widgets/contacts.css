@@ -1,0 +1,53 @@
+#itens_contact {
+    width: 100%;
+    margin-bottom: 16px;
+}
+#itens_contact > .title {
+    margin: 32px 32px 8px 32px;
+    font-size: medium;
+    font-weight: bold;
+}
+#itens_contact > .subtitle {
+    margin: 0 32px 0 32px;
+    font-size: small;
+}
+#itens_contact .inputfield {
+    width: 236px;
+}
+#itens_contact .inputfield input, #itens_contact .inputfield textarea, #itens_contact .inputfield label {
+    font-size: small;
+}
+#itens_contact .inputfield textarea {
+    overflow : auto;
+}
+#itens_contact button {
+    margin: 32px;
+}
+#btn_call {
+    width: 48px;
+    height: 48px;
+    right: 24px;
+    bottom: 40px;
+    position: fixed;
+    border-radius: 100%;
+    display: flex;
+    z-index: 1500;
+}
+#btn_parent {
+    display: none;
+}
+@media (max-width: 992px) and (min-width:769px) {
+    #btn_parent {
+        display: flex;
+    }
+}
+@media (max-width:768px) and (min-width:513px) {
+    #btn_parent {
+        display: flex;
+    }
+}
+@media (max-width:512px) {
+    #btn_parent {
+        display: flex;
+    }
+}

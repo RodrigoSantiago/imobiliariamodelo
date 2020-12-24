@@ -1,0 +1,83 @@
+.contacts {
+    width: 70%;
+    min-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.left_contacts {
+    flex-grow: 1;
+    padding: 32px;
+}
+.left_contacts > * {
+    margin-bottom: 16px;
+}
+.left_contacts .title {
+    margin-left: 8px;
+}
+.left_contacts .social div {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    margin-right: 4px;
+    cursor: pointer;
+}
+.left_contacts .social img {
+    width: 18px;
+    height: 18px;
+    border-radius: 100%;
+}
+.left_contacts .social .youtube {
+    background-color: #ef5350;
+}
+.left_contacts .social .youtube:hover {
+    background-color: #f44336;
+}
+.left_contacts .social .facebook {
+    background-color: #5c6bc0;
+}
+.left_contacts .social .facebook:hover {
+    background-color: #3f51b5;
+}
+.left_contacts .social .instagram {
+    background-color: #ba68c8;
+}
+.left_contacts .social .instagram:hover {
+    background-color: #ab47bc;
+}
+.right_contacts {
+    flex-grow: 1;
+    padding: 32px;
+}
+.inputfield {
+    width: 100%;
+}
+.inputfield input, .inputfield textarea, .inputfield label {
+    width : 100%;
+    font-size: small;
+}
+.inputfield textarea {
+    overflow : auto;
+}
+.right_contacts > button {
+    width: 80px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+
+@media (max-width:768px) and (min-width:513px) {
+    .contacts {
+        min-width: 350px;
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width:512px) {
+    .contacts {
+        min-width: 350px;
+        grid-template-columns: 1fr;
+    }
+}

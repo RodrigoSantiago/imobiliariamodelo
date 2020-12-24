@@ -1,0 +1,86 @@
+.login_card {
+    border-radius: 2px;
+    max-width: 600px;
+    width: calc(100% - 16px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 32px;
+    padding-bottom: 16px;
+}
+.login_card .inputfield input, .login_card .inputfield textarea, .login_card .inputfield label, .login_card .mdl-checkbox ,
+.login_card .mdl-checkbox__label {
+    font-size: small;
+}
+.login_card .title {
+    font-size: small;
+    font-weight: 500;
+    margin: 32px 0;
+}
+.btn_login {
+    width: 300px;
+    padding-top: 32px;
+    justify-content: flex-end;
+}
+
+.grid {
+    margin-left: 8px;
+    margin-right: 8px;
+    display: grid;
+    flex-grow: 1;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+}
+
+.admin_card {
+    height: 300px;
+    margin-top: 32px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.admin_card .image {
+    background-color: #3f51b5;
+}
+.admin_card .title {
+    font-size: medium;
+    font-weight: bold;
+    margin: 16px 16px 0 16px;
+}
+.admin_card .subtitle {
+    font-size: small;
+    margin: 0 16px 16px 16px;
+}
+.admin_card .tag {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 64px;
+    height: 24px;
+    font-size: smaller;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+@media (max-width: 992px) and (min-width:769px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+}
+
+@media (max-width:768px) and (min-width:513px){
+    .grid {
+        grid-template-columns: 1fr;
+        margin-left: 32px;
+        margin-right: 32px;
+    }
+}
+
+@media (max-width:512px) {
+    .grid {
+        grid-template-columns: 1fr;
+        margin-left: 32px;
+        margin-right: 32px;
+    }
+}

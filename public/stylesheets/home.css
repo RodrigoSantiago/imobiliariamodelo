@@ -1,0 +1,375 @@
+/******SEARCH******/
+.buytitle {
+    display: flex;
+}
+.buyicon {
+    display: none;
+}
+#search_header {
+    height: 128px;
+}
+#search_header > div {
+    width: 70%;
+}
+
+#search_btn {
+    height: 50px;
+    padding: 0 16px;
+    border-radius: 2px 0 0 2px;
+}
+#search_btn > span {
+    width: 100%;
+    height: 100%;
+}
+#search_dropdown {
+    top : 50px;
+    width: 128px;
+    position: absolute;
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+}
+#search_dropdown > div {
+    height: 32px;
+    padding: 8px 16px;
+    align-items: center;
+}
+#search_field {
+    height: 50px;
+    flex-grow: 1;
+}
+#search_field > input {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0 20px 0;
+    border-radius: 0 2px 2px 0;
+    box-sizing: border-box;
+    font-size: medium;
+}
+#search_field > input:focus {
+    outline-width: 0;
+}
+#search_settings {
+    width: 100%;
+    position: absolute;
+    top:50px;
+    z-index: 20;
+    border-radius: 0 0 2px 2px;
+    display: none;
+    padding-bottom: 8px;
+}
+#search_settings > .divider {
+    margin-bottom: 8px;
+}
+#search_settings .session {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+#search_settings .session > * {
+    margin: 8px;
+    width: calc(50% - 32px);
+}
+#search_settings .inputfield input, #search_settings .inputfield textarea, #search_settings .inputfield label,
+#search_settings .mdl-checkbox , #search_settings .mdl-checkbox__label {
+    font-size: small;
+}
+#search_settings .mdl-textfield--floating-label.is-dirty .mdl-textfield__label,
+#search_settings .mdl-textfield--floating-label.is-focused .mdl-textfield__label{
+    font-size: 12px;
+}
+#search_settings .session .label {
+    font-size: 12px;
+}
+#search_settings .btns button {
+    min-width: 20%;
+    font-size: smaller;
+    padding-left: unset;
+    padding-right: unset;
+    border-radius: 0;
+}
+#search_settings .btns button:first-of-type {
+    border-radius: 2px 0 0 2px;
+}
+#search_settings .btns button:last-of-type {
+    border-radius: 0 2px 2px 0;
+}
+#search_settings .footerbtns button:first-of-type {
+    margin-right: 8px;
+}
+
+/******CAROUSEL*******/
+.header_carousel_title {
+    text-align: center;
+    padding: 16px;
+}
+.header_carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+.header_carousel .navigatorArea {
+    width: 64px;
+    height: 64px;
+}
+.header_carousel .navigator {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    margin : 16px;
+    text-decoration: none;
+}
+.header_carousel .area {
+    width: 64px;
+    height: 300px;
+    flex-grow : 1;
+
+    overflow: hidden;
+    position: relative;
+}
+.header_carousel .area {
+    overflow-x: hidden;
+    position:relative;
+}
+.header_carousel .area .container {
+    width: 1000%;
+    height: 100%;
+    overflow-x: visible;
+    position:absolute;
+
+    display: flex;
+    align-items: center;
+}
+.carousel_card {
+    width: calc(2.5% - 16px);
+    height: 280px;
+    margin: 0 8px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2px;
+    overflow: hidden;
+
+}
+.carousel_card > a {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.carousel_card .image {
+    flex-grow: 1;
+    height: 144px;
+    display: flex;
+    flex-direction: column;
+    margin: 2px;
+
+    background: no-repeat center center;
+    background-size: cover;
+}
+.carousel_card .image .price {
+    margin: 8px;
+    margin-top: auto;
+    font-weight: bold;
+    font-size: medium;
+}
+.carousel_card > a > .title {
+    margin: 16px 16px 0 16px;
+    font-size: smaller;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.carousel_card > a > .subtitle {
+    margin: 0 16px 16px 16px;
+    font-size: small;
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.carousel_card .buttons {
+    bottom: 0;
+    padding: 8px;
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+}
+.buttons .button {
+    width: 24px;
+    height: 24px;
+}
+.buttons .text {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+
+    font-size: smaller;
+    font-weight: bold;
+}
+.buttons .like {
+    margin-left: auto;
+}
+.header_carousel_footer {
+    align-items: center;
+    justify-content: center;
+
+    display: none;
+}
+.header_carousel_footer .dot {
+    width: 16px;
+    height: 16px;
+    margin: 8px 8px 16px 8px;
+    border-radius: 100%;
+    background-color: white;
+}
+
+/****************
+*      MAIN
+****************/
+.block {
+    flex-grow: 1;
+    height: 512px;
+    padding: 1px;
+    box-sizing: content-box;
+    border-radius: 2px;
+    margin: 8px;
+
+    display: flex;
+    flex-direction: column;
+}
+.block.block3 {
+    height: 600px;
+}
+.block .title {
+    font-size: large;
+}
+.block .subtitle {
+    font-size: small;
+}
+.block .header {
+    margin: 24px;
+}
+.block .image {
+    background: no-repeat center center;
+    background-size: cover;
+    margin: 1px;
+}
+.block .image .title {
+    font-size: small;
+    font-weight: bold;
+}
+.block .image .subtitle {
+    font-size: smaller;
+}
+.block .bar {
+    width: 100%;
+    padding: 8px 16px;
+    margin-top: auto;
+    justify-content: center;
+}
+.block .footer {
+    padding: 16px;
+}
+.block_split {
+    display: flex;
+    flex-direction: row;
+}
+
+/* SCREEN CUT 3 */
+@media (max-width: 992px) and (min-width:769px) {
+    #search_header > div {
+        width: 80%;
+    }
+    .carousel_card {
+        width: calc(3.3% - 16px);
+    }
+    .block_split {
+        flex-direction: column;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+/* SCREEN CUT 2 */
+@media (max-width:768px) and (min-width:513px) {
+    #search_header > div {
+        width: 90%;
+    }
+    #search_settings .session {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #search_settings .session > * {
+        margin: 8px;
+        width: calc(100% - 64px);
+    }
+    .carousel_card {
+        width: calc(5% - 16px);
+    }
+    .header_carousel > .area {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+    .header_carousel_footer {
+        display: flex;
+    }
+    .navigatorArea {
+        display: none;
+    }
+    .block_split {
+        flex-direction: column;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .header_carousel_footer .dot:last-child {
+        display: none;
+    }
+}
+/* SCREEN CUT 1 */
+@media (max-width:512px) {
+    .buytitle {
+        display: none;
+    }
+    .buyicon {
+        display: flex;
+    }
+    #search_header > div {
+        width: calc(100% - 32px);
+    }
+    #search_settings .session {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #search_settings .session > * {
+        margin: 8px;
+        width: calc(100% - 64px);
+    }
+    .header_carousel > .area {
+        margin-left: 24px;
+        margin-right: 24px;
+        height: 400px;
+    }
+    .carousel_card {
+        width: calc(10% - 16px);
+        height: 380px;
+    }
+    .header_carousel_footer {
+        display: flex;
+    }
+    .navigatorArea {
+        display: none;
+    }
+    .block_split {
+        flex-direction: column;
+    }
+}
